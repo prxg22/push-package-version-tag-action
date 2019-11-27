@@ -32,9 +32,12 @@ const run = async () => {
   try {
     const prefix = core.getInput("prefix") || ''
     await configGit();
+    console.log('> git configured')
     const version = getVersion();
     await createTag(version);
+    console.log('> tag ${prefix}${version} created!')
     await pushTag()
+    console.log('> tag ${prefix}${version} pushed!')
   } catch (e) {
     core.setFailed(e);
   }
