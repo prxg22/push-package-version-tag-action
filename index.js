@@ -23,11 +23,10 @@ const configGit = async () => {
 const pushTag = async () => {
   console.log(process.env)
   const actor = process.env.GITHUB_ACTOR
-  const repository = process.env.GITHUB_REPO
+  const repository = process.env.GITHUB_REPOSITORY
 
   const remote = `https://${actor}:${githubToken}@github.com/${repository}.git`;
   await exec(`git push "${remote}" --tags`);
-  await exec(`git push `)
 }
 
 const run = async () => {
