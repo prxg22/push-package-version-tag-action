@@ -15,8 +15,7 @@ const getVersion = () => {
 };
 
 const createTag = async version => {
-  const ref = process.env.GITHUB_HEAD;
-  const { sha } = github.context;
+  const { sha, ref } = github.context;
 
   console.log({ ref, sha })
   const { data: commit } = await octokit.repos.getCommit({
