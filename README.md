@@ -8,8 +8,7 @@ Github action to create and push `package.json` tag
 
 github token with access to merge in head-branch
 
-### prefix
-*required | default: ''*
+### tag-prefix
 
 tag prefix
 

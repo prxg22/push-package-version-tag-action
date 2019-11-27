@@ -6,10 +6,8 @@ inputs:
     description: 'github token with access to merge in head-branch'
     required: true
 
-  prefix:
+  tag-prefix:
     description: 'tag prefix'
-    required: true
-    default: ''
 
 runs:
   using: 'node12'

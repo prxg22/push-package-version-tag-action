@@ -30,7 +30,7 @@ const pushTag = async () => {
 
 const run = async () => {
   try {
-    const prefix = core.getInput("prefix") || ''
+    const prefix = core.getInput("tag-prefix") || ''
     await configGit();
     console.log('> git configured')
     const version = getVersion();
