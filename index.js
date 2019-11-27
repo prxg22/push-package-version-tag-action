@@ -12,7 +12,7 @@ const getVersion = () => {
   return version;
 };
 
-const createTag = async (version, prefix) =>
+const createTag = async (version = '', prefix) =>
   exec("git tag", ["-a", `${prefix}${version}`, "-m", `'Release version ${version}'`]);
 
 const configGit = async () => {
