@@ -13,7 +13,7 @@ const getVersion = () => {
 };
 
 const createTag = async version => {
-  await exec(`git tag`, [`-a ${version}`, `-m 'Release version ${version}'`]);
+  await exec("git tag", ["-a", version, "-m", `'Release version ${version}'`]);
   await exec("git push --tags");
 };
 
