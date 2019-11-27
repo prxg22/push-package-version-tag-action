@@ -12,21 +12,30 @@ const getVersion = () => {
   return version;
 };
 
-const createTag = async version => {
-  await exec("git tag", ["-a", version, "-m", `'Release version ${version}'`]);
-  // await exec("git push --tags");
-};
+const createTag = async version =>
+  exec("git tag", ["-a", version, "-m", `'Release version ${version}'`]);
 
 const configGit = async () => {
   await exec(`git config --local user.email "action@github.com"`);
   await exec(`git config --local user.name "Push Package Version Tag Action"`);
 };
 
+const pushTag = async () => {
+  console.log(process.env)
+  const actor = process.env.GITHUB_ACTOR
+  const repository = process.env.GITHUB_REPO
+
+  const remote = `https://${actor}:${githubToken}@github.com/${repository}.git`;
+  await exec(`git push "${remote}" --tags`);
+  await exec(`git push `)
+}
+
 const run = async () => {
   try {
-    await configGit()
+    await configGit();
     const version = getVersion();
     await createTag(version);
+    await pushTag()
   } catch (e) {
     core.setFailed(e);
   }
