@@ -15,23 +15,8 @@ const getVersion = () => {
 };
 
 const createTag = async version => {
-  const { sha, ref } = github.context;
-
-  console.log({ ref, sha })
-  const { data: commit } = await octokit.repos.getCommit({
-    ...github.context.repo,
-    ref,
-    sha
-  });
-  console.log(commit)
-
-  await octokit.repos.createTag({
-    ...github.context.repo,
-    tag: version,
-    message: `Release version: ${version}`,
-    object: commit,
-    type: "commit"
-  });
+  await exec(`git tag ${version} -m 'Release version ${version}'`)
+  await exec('git push --tags')
 };
 
 const run = async () => {
