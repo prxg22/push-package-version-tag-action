@@ -6,8 +6,6 @@ const fs = require("fs");
 const githubToken = core.getInput("github-token");
 const octokit = new github.GitHub(githubToken);
 
-console.log(github.context)
-console.log(process.env)
 const getVersion = () => {
   const file = fs.readFileSync("package.json");
   const { version } = JSON.parse(file.toString());
@@ -15,8 +13,8 @@ const getVersion = () => {
 };
 
 const createTag = async version => {
-  await exec(`git tag -a ${version} -m 'Release version ${version}'`)
-  await exec('git push --tags')
+  await exec(`git tag`, [`-a ${version}`, `-m 'Release version ${version}'`]);
+  await exec("git push --tags");
 };
 
 const run = async () => {
