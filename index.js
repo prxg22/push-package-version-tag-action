@@ -12,7 +12,7 @@ const getVersion = () => {
   return version;
 };
 
-const createTag = async (version = '', prefix) =>
+const createTag = async (version, prefix = '') =>
   exec("git tag", ["-a", `${prefix}${version}`, "-m", `'Release version ${version}'`]);
 
 const configGit = async () => {
@@ -34,7 +34,7 @@ const run = async () => {
     await configGit();
     console.log('> git configured')
     const version = getVersion();
-    await createTag(version);
+    await createTag(version, prefix);
     console.log(`> tag ${prefix}${version} created!`)
     await pushTag()
     console.log(`> tag ${prefix}${version} pushed!`)
