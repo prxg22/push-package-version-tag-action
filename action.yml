@@ -1,0 +1,11 @@
+name: 'push-package-version-tag-action'
+description: 'create and push package.json tag'
+
+inputs:
+    github-token:
+    description: 'github token with access to merge in head-branch'
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'index.js'

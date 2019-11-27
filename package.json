@@ -1,0 +1,17 @@
+{
+  "name": "push-package-version-tag-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:prxg22/push-package-version-tag-action.git",
+  "author": "prxg22 <prxg22@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@actions/core": "1.2.x",
+    "@actions/exec": "1.0.x",
+    "@actions/github": "1.1.x"
+  },
+  "devDependencies": {
+    "eslint": "6.7.x"
+  }
+}
