@@ -14,11 +14,17 @@ const getVersion = () => {
 
 const createTag = async version => {
   await exec("git tag", ["-a", version, "-m", `'Release version ${version}'`]);
-  await exec("git push --tags");
+  // await exec("git push --tags");
+};
+
+const configGit = async () => {
+  await exec(`git config --local user.email "action@github.com"`);
+  await exec(`git config --local user.name "Push Package Version Tag Action"`);
 };
 
 const run = async () => {
   try {
+    await configGit()
     const version = getVersion();
     await createTag(version);
   } catch (e) {
