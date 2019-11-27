@@ -7,7 +7,7 @@ const githubToken = core.getInput("github-token");
 const octokit = new github.GitHub(githubToken);
 
 const getVersion = () => {
-  const file = fs.readFileAsync("package.json");
+  const file = fs.readFileSync("package.json");
   const { version } = JSON.parse(file.toString());
   return version;
 };
