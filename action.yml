@@ -2,7 +2,7 @@ name: 'push-package-version-tag-action'
 description: 'create and push package.json tag'
 
 inputs:
-    github-token:
+  github-token:
     description: 'github token with access to merge in head-branch'
     required: true
 
