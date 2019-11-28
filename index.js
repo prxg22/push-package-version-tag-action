@@ -29,13 +29,13 @@ const pushTag = async tag => {
 
   const res = await octokit.git.listMatchingRefs({
     ...github.context.repo,
-    ref: `tag/${tag}`
+    ref: `tags/${tag}`
   });
 
   const { data: tags } = res;
   console.log(res);
   console.log(tags);
-  if (!tags || tags.length === 0) return false;
+  if (tags && tags.length > 0) return false;
 
   const remote = `https://${actor}:${githubToken}@github.com/${repository}.git`;
   await exec(`git push "${remote}" --tags`);
