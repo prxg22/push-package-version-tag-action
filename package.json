@@ -8,8 +8,7 @@
   "private": false,
   "dependencies": {
     "@actions/core": "1.2.x",
-    "@actions/exec": "1.0.x",
-    "@actions/github": "1.1.x"
+    "@actions/exec": "1.0.x"
   },
   "devDependencies": {
     "eslint": "6.7.x"
