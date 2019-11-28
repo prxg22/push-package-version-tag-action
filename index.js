@@ -2,6 +2,8 @@ const core = require("@actions/core");
 const { exec } = require("@actions/exec");
 const fs = require("fs");
 
+const TRUE = 1
+const FALSE = 0
 const githubToken = core.getInput("github-token");
 
 const getVersion = () => {
@@ -47,10 +49,10 @@ const run = async () => {
     }
     console.log(`> tag ${tag} created!`);
     await pushTag();
-    console.log(`> tag ${tag} already exist`);
-    core.setOutput("created-tag", true);
+    console.log(`> tag ${tag} pushed`);
+    core.setOutput("created-tag", TRUE);
   } catch (e) {
-    core.setOutput("created-tag", false);
+    core.setOutput("created-tag", FALSE);
     core.setFailed(e);
   }
 };
