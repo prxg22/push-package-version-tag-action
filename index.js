@@ -14,8 +14,12 @@ const getVersion = () => {
 
 const createTag = async (version, prefix = "") => {
   const tag = `${prefix}${version}`;
-  exec("git tag", ["-a", `${tag}`, "-m", `'Release version ${tag}'`]);
-  return tag;
+  try {
+    await exec("git tag", ["-a", `${tag}`, "-m", `'Release version ${tag}'`]);
+    return tag;
+  } catch (e) {
+    return;
+  }
 };
 
 const configGit = async () => {
@@ -26,17 +30,6 @@ const configGit = async () => {
 const pushTag = async tag => {
   const actor = process.env.GITHUB_ACTOR;
   const repository = process.env.GITHUB_REPOSITORY;
-
-  const res = await octokit.git.listMatchingRefs({
-    ...github.context.repo,
-    ref: `tags/${tag}`
-  });
-
-  const { data: tags } = res;
-  console.log(res);
-  console.log(tags);
-  if (tags && tags.length > 0) return false;
-
   const remote = `https://${actor}:${githubToken}@github.com/${repository}.git`;
   await exec(`git push "${remote}" --tags`);
   return true;
@@ -49,10 +42,13 @@ const run = async () => {
     console.log("> git configured");
     const version = getVersion();
     const tag = await createTag(version, prefix);
+    if (!tag) {
+      console.log(`> tag already created!`)
+      return
+    }
     console.log(`> tag ${tag} created!`);
-    const pushed = await pushTag(tag);
-    if (pushed) console.log(`> tag ${tag} pushed!`);
-    else console.log(`> tag ${tag} already exist`);
+    await pushTag(tag);
+    console.log(`> tag ${tag} already exist`);
   } catch (e) {
     core.setFailed(e);
   }
