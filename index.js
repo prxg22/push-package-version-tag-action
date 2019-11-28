@@ -32,6 +32,7 @@ const pushTag = async tag => {
     ref: `tag/${tag}`
   });
 
+  console.log(tags)
   if (tags && tags.length > 0) return false
 
   const remote = `https://${actor}:${githubToken}@github.com/${repository}.git`;
