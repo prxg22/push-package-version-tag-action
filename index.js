@@ -12,32 +12,44 @@ const getVersion = () => {
   return version;
 };
 
-const createTag = async (version, prefix = '') =>
-  exec("git tag", ["-a", `${prefix}${version}`, "-m", `'Release version ${version}'`]);
+const createTag = async (version, prefix = "") => {
+  const tag = `${prefix}${version}`;
+  exec("git tag", ["-a", `${tag}`, "-m", `'Release version ${tag}'`]);
+  return tag;
+};
 
 const configGit = async () => {
   await exec(`git config --local user.email "action@github.com"`);
   await exec(`git config --local user.name "Push Package Version Tag Action"`);
 };
 
-const pushTag = async () => {
-  const actor = process.env.GITHUB_ACTOR
-  const repository = process.env.GITHUB_REPOSITORY
+const pushTag = async tag => {
+  const actor = process.env.GITHUB_ACTOR;
+  const repository = process.env.GITHUB_REPOSITORY;
+
+  const { data: tags } = octokit.git.listMatchingRefs({
+    ...github.context.repo,
+    ref: `tag/${tag}`
+  });
+
+  if (tags && tags.length > 0) return false
 
   const remote = `https://${actor}:${githubToken}@github.com/${repository}.git`;
   await exec(`git push "${remote}" --tags`);
-}
+  return true
+};
 
 const run = async () => {
   try {
-    const prefix = core.getInput("tag-prefix") || ''
+    const prefix = core.getInput("tag-prefix") || "";
     await configGit();
-    console.log('> git configured')
+    console.log("> git configured");
     const version = getVersion();
-    await createTag(version, prefix);
-    console.log(`> tag ${prefix}${version} created!`)
-    await pushTag()
-    console.log(`> tag ${prefix}${version} pushed!`)
+    const tag = await createTag(version, prefix);
+    console.log(`> tag ${tag} created!`);
+    const pushed = await pushTag(tag);
+    if (pushed) console.log(`> tag ${tag} pushed!`);
+    else console.log(`> tag ${tag} already exist`);
   } catch (e) {
     core.setFailed(e);
   }
