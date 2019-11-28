@@ -15,9 +15,8 @@ tag prefix
 
 ## Example usage
 ```yml
-uses: prxg22/version-bump-action@master
+uses: prxg22/push-package-version-tag-action@master
 with:
-  head-branch: release
-  initial-version: 1.0.0
+  tag-prefix: v
   github-token: ${{secrets.GITHUB_TOKEN}}
 ```
