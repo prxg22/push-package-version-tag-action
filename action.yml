@@ -9,6 +9,10 @@ inputs:
   tag-prefix:
     description: 'tag prefix'
 
+outputs:
+  created-tag:
+    description: 'if a new tag was created or not'
+
 runs:
   using: 'node12'
   main: 'index.js'

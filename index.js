@@ -42,12 +42,15 @@ const run = async () => {
     const tag = await createTag(version, prefix);
     if (!tag) {
       console.log(`> tag already created!`);
+      core.setOutput("created-tag", false);
       return;
     }
     console.log(`> tag ${tag} created!`);
     await pushTag();
     console.log(`> tag ${tag} already exist`);
+    core.setOutput("created-tag", true);
   } catch (e) {
+    core.setOutput("created-tag", false);
     core.setFailed(e);
   }
 };

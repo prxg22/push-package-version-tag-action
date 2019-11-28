@@ -13,6 +13,13 @@ github token with access to merge in head-branch
 tag prefix
 
 
+## Outputs
+
+### created-tag
+*boolean*
+
+if a new tag was created or not
+
 ## Example usage
 ```yml
 uses: prxg22/push-package-version-tag-action@master
